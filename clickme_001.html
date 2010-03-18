@@ -19,7 +19,7 @@
 		<p>Player 2: press "k" to get points ("m" to lose points)</p>
 		<p id="msg">you have about 30 seconds...</p>
 		<div id="pts"></div>
-		<a href="">the blog post</a>
+		<a href="http://andrewwooldridge.com/blog/2009/11/12/the-click-me-challenge/">the blog post inspiration</a>
 	
 	
 		<script src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js"></script>
@@ -40,8 +40,8 @@
 			    
 			    handle = Y.on('keypress', function(e) {
 			        if (!keys[e.charCode]) {return;}
-		            keys[e.charCode]();
-		            score.setContent(pts1 + ' : ' + pts2);
+			        keys[e.charCode]();
+			        score.setContent(pts1 + ' : ' + pts2);
 			    });
 			    
 			    Y.later(30000, handle, function(){this.detach(); msg.setContent('done.');});
