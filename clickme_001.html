@@ -6,33 +6,51 @@
 		- version 1.0
 		- last edited Nov 11, 2009
 		- MIT licensed
+		
+		- Multiplyer mode by Stoyan http://phpied.com
 		-->
 		<title>Click Me to Get Points</title>
-		
-		<script type="text/javascript" src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js"></script>
-		<script>
-			YUI().use("node",function(Y){
-				Y.on("domready", function(){
-					var pts = 0;
-					
-					//Y.log("hello world");
-					
-
-					
-					var btn = Y.one("#btn")
-					btn.on("click",function(){
-						Y.log("button clicked!")
-						pts++;
-						Y.one("#pts").set("innerHTML",pts)
-					})
-					
-				});
-			});
-		</script>
+		<style>
+		#pts {text-align: center; font-size: 200px; font-weight: bold;}
+		</style>
 	</head>
 	<body>
-		<button id="btn">Click Me to Get Points</button>
-		<div id="pts">0</div>
+		<p>Player 1: press "a" to get points ("z" to lose points)</p>
+		<p>Player 2: press "k" to get points ("m" to lose points)</p>
+		<p id="msg">you have about 30 seconds...</p>
+		<div id="pts"></div>
+		<a href="">the blog post</a>
+	
+	
+		<script src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js"></script>
+		<script>
+			YUI().use("node",function(Y){
+			    
+			    var pts1 = 0, pts2 = 0,
+			        score = Y.one("#pts"),
+			        msg = Y.one("#msg"),
+			        keys, handle;
+			    
+			    keys = {
+			        97:  function(){pts1++;},
+			        122: function(){pts1 -= Math.ceil(Math.random() * 10);},
+			        107: function(){pts2++;},
+			        109: function(){pts2 -= Math.ceil(Math.random() * 10);}
+			    };
+			    
+			    handle = Y.on('keypress', function(e) {
+			        if (!keys[e.charCode]) {return;}
+		            keys[e.charCode]();
+		            score.setContent(pts1 + ' : ' + pts2);
+			    });
+			    
+			    Y.later(30000, handle, function(){this.detach(); msg.setContent('done.');});
+			    Y.later(25000, msg, function(){this.setContent('you have 5 seconds...');});
+			    Y.later(20000, msg, function(){this.setContent('you have 10 seconds...');});
+			    score.setContent("GO!")
+			    
+			});
+		</script>
 		
 	</body>
 </html>
